@@ -1,7 +1,7 @@
 package ru.bcomms.estoremanagement.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
@@ -18,7 +18,7 @@ public class ElectroShopPK implements Serializable {
      * Идентификатор магазина - ссылка на идентификатор магазина справочника «Магазин»
      */
     @ManyToOne
-    @Column(name = "shop_id")
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 
     /**
@@ -26,6 +26,6 @@ public class ElectroShopPK implements Serializable {
      * реестра «Электротовары»
      */
     @ManyToOne
-    @Column(name = "electro_item_id")
+    @JoinColumn(name = "electro_item_id")
     private ElectroItem electroItem;
 }

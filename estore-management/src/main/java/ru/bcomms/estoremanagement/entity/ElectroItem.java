@@ -2,20 +2,17 @@ package ru.bcomms.estoremanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
-import java.io.Serializable;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "electro_item")
-public class ElectroItem implements Serializable {
+public class ElectroItem extends CommonEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue
-    private long id;
 
     /**
      * Название товара
@@ -27,7 +24,7 @@ public class ElectroItem implements Serializable {
      * Тип товара – ссылка на идентификатор типа электроники справочника «Тип электроники»
      */
     @ManyToOne
-    @Column(name = "etype_id")
+    @JoinColumn(name = "etype_id")
     private ElectroType electroType;
 
     /**

@@ -2,35 +2,36 @@ package ru.bcomms.estoremanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "purchase")
-public class Purchase implements Serializable {
+public class Purchase extends CommonEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     /**
      * Идентификатор электротовара – ссылка на идентификатор электротовара
      * реестра «Электротовары»
      */
     @ManyToOne
-    @Column(name = "electro_id")
+    @JoinColumn(name = "electro_id")
     private ElectroItem electroItem;
 
     /**
      * Идентификатор сотрудника - ссылка на идентификатор сотрудника реестра «Сотрудники»
      */
     @ManyToOne
-    @Column(name = "employee_id")
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
     /**
@@ -45,7 +46,7 @@ public class Purchase implements Serializable {
      * Тип покупки - ссылка на идентификатор типа покупки справочника «Тип покупки»
      */
     @ManyToOne
-    @Column(name = "type_id")
+    @JoinColumn(name = "type_id")
     private PurchaseType purchaseType;
 
     /**
@@ -53,6 +54,6 @@ public class Purchase implements Serializable {
      * магазина в справочнике «Магазин»
      */
     @ManyToOne
-    @Column(name = "shop_id")
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 }

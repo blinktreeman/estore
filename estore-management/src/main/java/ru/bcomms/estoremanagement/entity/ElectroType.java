@@ -2,22 +2,19 @@ package ru.bcomms.estoremanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "electro_type")
-public class ElectroType implements Serializable {
+public class ElectroType extends CommonEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue
-    private long id;
 
     /**
      * Наименование типа электроники
@@ -31,8 +28,8 @@ public class ElectroType implements Serializable {
     @ManyToMany
     @JoinTable(
             name = "electro_employee",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id")
+            joinColumns = @JoinColumn(name = "electro_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "employee_id")
     )
     private List<Employee> employees = new ArrayList<>();
 }

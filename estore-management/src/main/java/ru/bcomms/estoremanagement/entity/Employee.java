@@ -2,21 +2,18 @@ package ru.bcomms.estoremanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "employee")
-public class Employee implements Serializable {
+public class Employee extends CommonEntity {
     @Serial
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue
-    private long id;
 
     /**
      * Фамилия сотрудника
@@ -47,7 +44,7 @@ public class Employee implements Serializable {
      * справочника «Должности»
      */
     @ManyToOne
-    @Column(name = "position_id")
+    @JoinColumn(name = "position_id")
     private PositionType positionType;
 
     /**
@@ -55,7 +52,7 @@ public class Employee implements Serializable {
      * магазина в справочнике «Магазин»
      */
     @ManyToOne
-    @Column(name = "shop_id")
+    @JoinColumn(name = "shop_id")
     private Shop shop;
 
     /**
