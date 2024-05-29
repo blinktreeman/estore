@@ -3,6 +3,7 @@ package ru.bcomms.estoremanagement.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.Formula;
 
 import java.io.Serial;
 
@@ -37,6 +38,7 @@ public class ElectroItem extends CommonEntity {
      * Количество – целое число, указывающее на общее количество данного товара в магазинах
      */
     @Column(name = "count", nullable = false)
+    @Formula("(SELECT SUM(count) FROM electro_shop AS es WHERE es.electro_item_id = id)")
     private int count;
 
     /**
