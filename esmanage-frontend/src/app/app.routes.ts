@@ -11,6 +11,7 @@ import {
   PurchaseTypeListComponent
 } from "./reference-book/purchase-type/purchase-type-list/purchase-type-list.component";
 import {ShopListComponent} from "./reference-book/shop/shop-list/shop-list.component";
+import {ShopDetailsComponent} from "./reference-book/shop/shop-details/shop-details.component";
 
 export const routes: Routes = [
 
@@ -22,6 +23,8 @@ export const routes: Routes = [
   {path: 'electro-type-list', component: ElectroTypeListComponent},
   {path: 'position-type-list', component: PositionTypeListComponent},
   {path: 'purchase-type-list', component: PurchaseTypeListComponent},
+
   {path: 'shop-list', component: ShopListComponent},
+  {path: 'shop-details/:id', component: ShopDetailsComponent}
 
 ];

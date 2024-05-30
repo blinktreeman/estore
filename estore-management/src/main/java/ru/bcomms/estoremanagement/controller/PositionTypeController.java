@@ -36,9 +36,8 @@ public class PositionTypeController {
 
     @PutMapping
     public ResponseEntity<PositionType> update(@RequestBody PositionType entity) {
-        return service
-                .findById(entity.getId())
-                .map((value) -> new ResponseEntity<>(service.save(value), HttpStatus.OK))
+        return service.update(entity)
+                .map((value) -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

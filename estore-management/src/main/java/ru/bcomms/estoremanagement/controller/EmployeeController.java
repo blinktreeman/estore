@@ -36,9 +36,8 @@ public class EmployeeController {
 
     @PutMapping
     public ResponseEntity<Employee> update(@RequestBody Employee entity) {
-        return service
-                .findById(entity.getId())
-                .map((value) -> new ResponseEntity<>(service.save(value), HttpStatus.OK))
+        return service.update(entity)
+                .map((value) -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
