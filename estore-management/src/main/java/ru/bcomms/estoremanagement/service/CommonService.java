@@ -1,5 +1,7 @@
 package ru.bcomms.estoremanagement.service;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Sort;
 import ru.bcomms.estoremanagement.entity.CommonEntity;
 import ru.bcomms.estoremanagement.repository.CommonRepository;
 
@@ -23,7 +25,7 @@ public abstract class CommonService<E extends CommonEntity, R extends CommonRepo
     }
 
     public Iterable<E> findAll() {
-        return repository.findAll();
+        return repository.findAll(Sort.by("id").ascending());
     }
 
     public Optional<E> update(E entity) {
