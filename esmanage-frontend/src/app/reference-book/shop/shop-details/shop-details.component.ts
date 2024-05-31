@@ -20,6 +20,7 @@ export class ShopDetailsComponent implements OnInit {
   shop: Shop = new Shop();
 
   constructor(private service: ShopService,
+              private router: Router,
               private route: ActivatedRoute) {
   }
 
@@ -37,6 +38,15 @@ export class ShopDetailsComponent implements OnInit {
     this.service.updateShop(this.shop).subscribe({
       next: value => {
         this.shop = value;
+      },
+      error: err => console.log(err)
+    });
+  }
+
+  deleteShop() {
+    this.service.deleteShopById(this.shop.id).subscribe({
+      next: value => {
+        this.router.navigate(['/shop-list']);
       },
       error: err => console.log(err)
     });

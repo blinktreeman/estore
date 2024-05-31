@@ -29,7 +29,7 @@ export class ShopService {
     return this.http.put(`${this.BASE_URL}/shop`, shop);
   }
 
-  deleteShopById(id: bigint): Observable<Object> {
+    deleteShopById(id: bigint | undefined): Observable<Object> {
     return this.http.delete(`${this.BASE_URL}/shop?id=${id}`);
   }
 }

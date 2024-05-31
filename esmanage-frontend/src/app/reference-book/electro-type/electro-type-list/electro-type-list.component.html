@@ -1,1 +1,67 @@
-<p>electro-type-list works!</p>
+<h4 class="p-3">Тип электроники</h4>
+
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Наименование типа электроники</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let electroType of electroTypeList">
+    <td> {{ electroType.id }}</td>
+    <td> {{ electroType.name }}</td>
+    <td>
+      <button (click)="electroTypeDetails(electroType.id)"
+              name="electro_type_details"
+              class="btn btn-outline-primary btn-sm">
+        Просмотреть
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createElectroType">
+  Добавить
+</button>
+
+<!-- Create ElectroType Modal -->
+<div class="modal fade" id="createElectroType" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createElectroTypeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createElectroTypeLabel">Добавление нового типа электроники</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="electro_type_name" class="form-label">Наименование *</label>
+          <input type="text" class="form-control" id="electro_type_name"
+                 [(ngModel)]="electroType.name" name="electro_type_name">
+          <div id="electro_type_name_help" class="form-text">
+            Наименование типа электроники
+          </div>
+        </div>
+
+        <label class="form-label">
+          <mark>Поля, отмеченные "*" обязательны к заполнению</mark>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="createElectroType()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

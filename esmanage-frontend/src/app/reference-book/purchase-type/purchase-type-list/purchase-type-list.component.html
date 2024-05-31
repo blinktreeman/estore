@@ -1,1 +1,65 @@
-<p>purchase-type-list works!</p>
+<h4 class="p-3">Типы покупки</h4>
+
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Наименование типа покупки</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let purchaseType of purchaseTypeList">
+    <td> {{ purchaseType.id }}</td>
+    <td> {{ purchaseType.name }}</td>
+    <td>
+      <button (click)="purchaseTypeDetails(purchaseType.id)"
+              name="position-type_details"
+              class="btn btn-outline-primary btn-sm">
+        Просмотреть
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPurchaseType">
+  Добавить
+</button>
+
+<!-- Create positionType Modal -->
+<div class="modal fade" id="createPurchaseType" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createPurchaseTypeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createPurchaseTypeLabel">Добавление нового типа покупки</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="purchase_type_name" class="form-label">Наименование *</label>
+          <input type="text" class="form-control" id="purchase_type_name"
+                 [(ngModel)]="purchaseType.name" name="purchase_type_name">
+          <div id="purchase_type_name_help" class="form-text">
+            Наименование типа покупки
+          </div>
+        </div>
+
+        <label class="form-label"><mark>Поля, отмеченные "*" обязательны к заполнению</mark></label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="createPurchaseType()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
