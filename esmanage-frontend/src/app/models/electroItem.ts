@@ -1,12 +1,11 @@
 import {ElectroType} from "./electroType";
-import {ElectroShop} from "./electroShop";
 
 export class ElectroItem {
   id?: bigint;
   name?: string;
   electroType?: ElectroType;
   price?: number;
-  count?: number;
-  archive?: boolean;
+  count: number = 0;
+  archive: boolean = false;
   description?: string;
 }

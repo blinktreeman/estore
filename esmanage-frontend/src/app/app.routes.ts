@@ -21,12 +21,16 @@ import {
 import {
   PurchaseTypeDetailsComponent
 } from "./reference-book/purchase-type/purchase-type-details/purchase-type-details.component";
+import {ItemDetailsComponent} from "./electro-item/item-details/item-details.component";
 
 export const routes: Routes = [
 
   {path: '', outlet: 'navbar', component: NavbarComponent},
 
   {path: 'item-list', component: ItemListComponent},
+  {path: 'item-details/:id', component: ItemDetailsComponent},
+
+
   {path: 'employee-list', component: EmployeeListComponent},
   {path: 'purchase-list', component: PurchaseListComponent},
 
