@@ -51,7 +51,6 @@ export class ItemListComponent implements OnInit {
     });
   }
 
-  selectedType: ElectroType = new ElectroType();
   onChangeType(electroType: ElectroType) {
     this.electroItem.electroType = electroType;
   }
@@ -73,4 +72,6 @@ export class ItemListComponent implements OnInit {
       error: err => console.log(err)
     });
   }
+
+  protected readonly ElectroType = ElectroType;
 }

@@ -62,7 +62,7 @@
 
         <div class="form-group mb-3">
           <label for="item_type" class="form-label">Тип товара *</label>
-          <select class="form-select" [ngModel]="selectedType"
+          <select class="form-select" [ngModel]="ElectroType"
                   (ngModelChange)="onChangeType($event)" name="type_select">
             <option *ngFor="let itemType of electroTypeList" [ngValue]="itemType" id="item_type">
               {{ itemType.name }}

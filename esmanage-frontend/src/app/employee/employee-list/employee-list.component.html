@@ -1,1 +1,126 @@
-<p>employee-list works!</p>
+<h4 class="p-3">Сотрудники</h4>
+
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Фамилия</th>
+    <th>Имя</th>
+    <th>Отчество</th>
+    <th>Дата рождения</th>
+    <th>Должность</th>
+    <th>Магазин</th>
+    <th>Пол</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let employee of employeeList">
+    <td> {{ employee.id }}</td>
+    <td> {{ employee.lastName }}</td>
+    <td> {{ employee.firstName }}</td>
+    <td> {{ employee.patronymic }}</td>
+    <td> {{ employee.birthDate }}</td>
+    <td> {{ employee.position?.name }}</td>
+    <td> {{ employee.shop?.name }}</td>
+    <td> {{ employee.gender }}</td>
+    <td>
+      <button (click)="employeeDetails(employee.id)"
+              name="employee_details"
+              class="btn btn-outline-primary btn-sm">
+        Просмотреть
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEmployee">
+  Добавить
+</button>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createEmployee" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createEmployeeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createEmployeeLabel">Добавление сотрудника</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="last_name" class="form-label">Фамилия *</label>
+          <input type="text" class="form-control" id="last_name"
+                 [(ngModel)]="employee.lastName" name="last_name">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="first_name" class="form-label">Имя *</label>
+          <input type="text" class="form-control" id="first_name"
+                 [(ngModel)]="employee.firstName" name="first_name">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="patronymic" class="form-label">Отчество *</label>
+          <input type="text" class="form-control" id="patronymic"
+                 [(ngModel)]="employee.patronymic" name="patronymic">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="birth_date" class="form-label">Дата рождения *</label>
+          <input type="date" class="form-control" id="birth_date"
+                 [(ngModel)]="employee.birthDate" name="birth_date">
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="position_type" class="form-label">Должность *</label>
+          <select class="form-select" [ngModel]="PositionType"
+                  (ngModelChange)="onChangePositionType($event)" name="position_type">
+            <option *ngFor="let positionType of positionTypeList" [ngValue]="positionType" id="position_type">
+              {{ positionType.name }}
+            </option>
+          </select>
+          <div id="position_type_help" class="form-text">
+            Выберите должность нового работника
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="shop" class="form-label">Магазин *</label>
+          <select class="form-select" [ngModel]="Shop"
+                  (ngModelChange)="onChangeShop($event)" name="shop">
+            <option *ngFor="let shop of shopList" [ngValue]="shop" id="shop">
+              {{ shop.name }}
+            </option>
+          </select>
+          <div id="shop_help" class="form-text">
+            Выберите место работы сотрудника
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Пол *</label>
+          <div>
+              <input type="radio" [(ngModel)]="employee.gender"  name="gender" value="true">М
+              <input type="radio" [(ngModel)]="employee.gender"  name="gender" value="false">Ж
+          </div>
+        </div>
+
+        <label class="form-label"><mark>Поля, отмеченные "*" обязательны к заполнению</mark></label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="createEmployee()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
