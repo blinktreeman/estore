@@ -16,7 +16,7 @@
     <td> {{ shop.address }}</td>
     <td>
       <button (click)="shopDetails(shop.id)"
-              name="journal_details"
+              name="shop_details"
               class="btn btn-outline-primary btn-sm">
         Просмотреть
       </button>
@@ -26,17 +26,17 @@
 </table>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createShop">
   Добавить
 </button>
 
 <!-- Create Shop Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="createShop" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createShopLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Добавление нового магазина</h1>
+        <h1 class="modal-title fs-5" id="createShopLabel">Добавление нового магазина</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

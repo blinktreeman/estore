@@ -12,6 +12,15 @@ import {
 } from "./reference-book/purchase-type/purchase-type-list/purchase-type-list.component";
 import {ShopListComponent} from "./reference-book/shop/shop-list/shop-list.component";
 import {ShopDetailsComponent} from "./reference-book/shop/shop-details/shop-details.component";
+import {
+  ElectroTypeDetailsComponent
+} from "./reference-book/electro-type/electro-type-details/electro-type-details.component";
+import {
+  PositionTypeDetailsComponent
+} from "./reference-book/position-type/position-type-details/position-type-details.component";
+import {
+  PurchaseTypeDetailsComponent
+} from "./reference-book/purchase-type/purchase-type-details/purchase-type-details.component";
 
 export const routes: Routes = [
 
@@ -20,11 +29,17 @@ export const routes: Routes = [
   {path: 'item-list', component: ItemListComponent},
   {path: 'employee-list', component: EmployeeListComponent},
   {path: 'purchase-list', component: PurchaseListComponent},
+
   {path: 'electro-type-list', component: ElectroTypeListComponent},
+  {path: 'electro-type-details/:id', component: ElectroTypeDetailsComponent},
+
   {path: 'position-type-list', component: PositionTypeListComponent},
+  {path: 'position-type-details/:id', component: PositionTypeDetailsComponent},
+
   {path: 'purchase-type-list', component: PurchaseTypeListComponent},
+  {path: 'purchase-type-details/:id', component: PurchaseTypeDetailsComponent},
 
   {path: 'shop-list', component: ShopListComponent},
-  {path: 'shop-details/:id', component: ShopDetailsComponent}
+  {path: 'shop-details/:id', component: ShopDetailsComponent},
 
 ];

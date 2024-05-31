@@ -2,16 +2,14 @@
   <div class="mb-3 mb-sm-0">
     <div class="card">
       <div class="card-header">
-        <h4>Магазин</h4>
+        <h4>Тип покупки</h4>
       </div>
       <div class="card-body">
 
-        <h6>id магазина</h6>
-        <p>{{ shop.id }}</p>
-        <h6>Наименование магазина</h6>
-        <p>{{ shop.name }}</p>
-        <h6>Адрес магазина</h6>
-        <p>{{ shop.address }}</p>
+        <h6>id типа</h6>
+        <p>{{ purchaseType.id }}</p>
+        <h6>Наименование типа покупки</h6>
+        <p>{{ purchaseType.name }}</p>
 
       </div>
       <div class="card-footer">
@@ -28,32 +26,23 @@
   </div>
 </div>
 
-<!-- Update Shop Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateModalLabel">Редактирование данных магазина</h1>
+        <h1 class="modal-title fs-5" id="updateModalLabel">Редактирование данных типа покупки</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
 
         <div class="form-group mb-3">
-          <label for="shop_name" class="form-label">Наименование *</label>
-          <input type="text" class="form-control" id="shop_name"
-                 [(ngModel)]="shop.name" name="shop_name">
-          <div id="shop_name_help" class="form-text">
-            Наименование магазина
-          </div>
-        </div>
-
-        <div class="form-group mb-3">
-          <label for="shop_address" class="form-label">Адрес *</label>
-          <input type="text" class="form-control" id="shop_address"
-                 [(ngModel)]="shop.address" name="shop_address">
-          <div id="shop_address_help" class="form-text">
-            Адрес магазина
+          <label for="purchase_type_name" class="form-label">Наименование *</label>
+          <input type="text" class="form-control" id="purchase_type_name"
+                 [(ngModel)]="purchaseType.name" name="purchase_type_name">
+          <div id="purchase_type_name_help" class="form-text">
+            Наименование типа покупки
           </div>
         </div>
 
@@ -63,7 +52,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
         <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                (click)="updateShop()">
+                (click)="updatePurchaseType()">
           Сохранить
         </button>
       </div>
@@ -71,7 +60,7 @@
   </div>
 </div>
 
-<!-- Delete Shop Modal -->
+<!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -85,7 +74,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                (click)="deleteShop()">
+                (click)="deletePurchaseType()">
           Подтвердить
         </button>
       </div>

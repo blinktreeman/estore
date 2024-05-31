@@ -1,1 +1,65 @@
-<p>position-type-list works!</p>
+<h4 class="p-3">Должности</h4>
+
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Наименование должности</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let positionType of positionTypeList">
+    <td> {{ positionType.id }}</td>
+    <td> {{ positionType.name }}</td>
+    <td>
+      <button (click)="positionTypeDetails(positionType.id)"
+              name="position-type_details"
+              class="btn btn-outline-primary btn-sm">
+        Просмотреть
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPositionType">
+  Добавить
+</button>
+
+<!-- Create positionType Modal -->
+<div class="modal fade" id="createPositionType" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createPositionTypeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createPositionTypeLabel">Добавление новой должности</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="position_type_name" class="form-label">Наименование *</label>
+          <input type="text" class="form-control" id="position_type_name"
+                 [(ngModel)]="positionType.name" name="position_type_name">
+          <div id="position_type_name_help" class="form-text">
+            Наименование должности
+          </div>
+        </div>
+
+        <label class="form-label"><mark>Поля, отмеченные "*" обязательны к заполнению</mark></label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="createPositionType()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
