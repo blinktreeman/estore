@@ -7,7 +7,7 @@ export class Employee {
   firstName?: string;
   patronymic?: string;
   birthDate?: Date;
-  position?: PositionType;
+  positionType?: PositionType;
   shop?: Shop;
   gender?: boolean;
 }

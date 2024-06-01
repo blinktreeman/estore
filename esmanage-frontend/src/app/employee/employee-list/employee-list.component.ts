@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {Employee} from "../../models/employee";
@@ -13,7 +13,8 @@ import {EmployeeService} from "../employee.service";
   imports: [
     NgForOf,
     FormsModule,
-    NgIf
+    NgIf,
+    DatePipe
   ],
   templateUrl: './employee-list.component.html',
   styleUrl: './employee-list.component.css'
@@ -65,7 +66,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   onChangePositionType(positionType: PositionType) {
-    this.employee.position = positionType;
+    this.employee.positionType = positionType;
   }
 
   onChangeShop(shop: Shop) {
