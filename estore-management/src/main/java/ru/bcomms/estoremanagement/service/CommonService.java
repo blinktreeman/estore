@@ -1,6 +1,5 @@
 package ru.bcomms.estoremanagement.service;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Sort;
 import ru.bcomms.estoremanagement.entity.CommonEntity;
 import ru.bcomms.estoremanagement.repository.CommonRepository;
@@ -8,7 +7,7 @@ import ru.bcomms.estoremanagement.repository.CommonRepository;
 import java.util.Optional;
 
 public abstract class CommonService<E extends CommonEntity, R extends CommonRepository<E>> {
-    private final R repository;
+    protected final R repository;
 
     public CommonService(R repository) {
         this.repository = repository;

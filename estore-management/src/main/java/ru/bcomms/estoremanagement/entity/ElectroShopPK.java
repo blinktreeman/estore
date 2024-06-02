@@ -5,20 +5,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 @Data
 @Embeddable
-public class ElectroShopPK implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
+public class ElectroShopPK {
     /**
      * Идентификатор магазина - ссылка на идентификатор магазина справочника «Магазин»
      */
     @ManyToOne
-    @JoinColumn(name = "shop_id")
+    @JoinColumn(name = "shop_id", referencedColumnName = "id")
     private Shop shop;
 
     /**
@@ -26,6 +20,6 @@ public class ElectroShopPK implements Serializable {
      * реестра «Электротовары»
      */
     @ManyToOne
-    @JoinColumn(name = "electro_item_id")
+    @JoinColumn(name = "electro_item_id", referencedColumnName = "id")
     private ElectroItem electroItem;
 }

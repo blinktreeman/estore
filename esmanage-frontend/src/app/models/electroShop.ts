@@ -1,8 +1,8 @@
 import {ElectroItem} from "./electroItem";
 import {Shop} from "./shop";
+import {ElectroShopPK} from "./ElectroShopPK";
 
 export class ElectroShop {
-  electroItem?: ElectroItem;
-  shop?: Shop;
-  count?: number;
+  electroShopPK?: ElectroShopPK;
+  count: number = 0;
 }

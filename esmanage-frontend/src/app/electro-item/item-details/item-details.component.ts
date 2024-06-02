@@ -5,6 +5,9 @@ import {ElectroItem} from "../../models/electroItem";
 import {ItemService} from "../item.service";
 import {NgForOf, NgIf} from "@angular/common";
 import {ElectroType} from "../../models/electroType";
+import {ElectroShopDto} from "../../models/electroShopDto";
+import {ElectroShop} from "../../models/electroShop";
+import {ElectroShopPK} from "../../models/ElectroShopPK";
 
 @Component({
   selector: 'app-item-details',
@@ -23,6 +26,8 @@ export class ItemDetailsComponent implements OnInit {
   id: bigint | undefined;
   electroItem: ElectroItem = new ElectroItem();
   electroTypeList: ElectroType[] | undefined;
+  shopDtoList: ElectroShopDto[] = [];
+  protected readonly ElectroType = ElectroType;
 
   constructor(private service: ItemService,
               private router: Router,
@@ -38,6 +43,16 @@ export class ItemDetailsComponent implements OnInit {
       error: err => console.log(err)
     });
     this.getElectroTypeList();
+    this.getShopListWithElectroItemCount();
+  }
+
+  private getShopListWithElectroItemCount() {
+    this.service.getShopListWithElectroItemCount(this.id).subscribe({
+      next: value => {
+        this.shopDtoList = value;
+      },
+      error: err => console.log(err)
+    });
   }
 
   // Получить типы товаров для выбора типа при создании нового товара
@@ -72,5 +87,32 @@ export class ItemDetailsComponent implements OnInit {
     });
   }
 
-  protected readonly ElectroType = ElectroType;
+  addedAmount: number = 0;
+  electroShop: ElectroShop = new ElectroShop();
+
+  setElectroShop(shop: ElectroShopDto, count: number) {
+    this.electroShop.electroShopPK = {
+      shop: shop,
+      electroItem: this.electroItem,
+    };
+    this.electroShop.count = count;
+  }
+
+  updateElectroShop() {
+    if (this.electroShop.count == null) {
+      this.electroShop.count = this.addedAmount;
+    } else {
+      this.electroShop.count += this.addedAmount;
+    }
+    this.service.updateElectroShop(this.electroShop).subscribe({
+      next: value => {
+        let findName = value.electroShopPK?.shop?.name;
+        let index = this.shopDtoList.findIndex(s => s.name === findName);
+        this.shopDtoList[index].count = value.count;
+      },
+      error: err => console.log(err)
+    });
+
+  }
+
 }

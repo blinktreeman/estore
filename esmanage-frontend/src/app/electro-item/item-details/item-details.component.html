@@ -45,6 +45,65 @@
   </div>
 </div>
 
+<h4 class="p-3">Наличие товара по магазинам</h4>
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Магазин</th>
+    <th>Адрес</th>
+    <th>Количество</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let shopDto of shopDtoList">
+    <td> {{ shopDto.name }}</td>
+    <td> {{ shopDto.address }}</td>
+    <td> {{ shopDto.count }}</td>
+    <td>
+      <!-- Add button trigger modal -->
+      <button type="button" class="btn btn-sm btn-outline-primary me-md-2" data-bs-toggle="modal"
+              data-bs-target="#addModal"
+              (click)="setElectroShop(shopDto, shopDto.count)">
+        Пополнить товар
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Пополнение товара</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="amount" class="form-label">Количество</label>
+          <input type="number" step="1" class="form-control" id="amount"
+                 [(ngModel)]="addedAmount" name="amount">
+          <div id="amount_help" class="form-text">
+            Количество товара, добавляемого в указанный магазин
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="updateElectroShop()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Update Modal -->
 <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false"
      tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
@@ -91,8 +150,6 @@
           <label for="description" class="form-label">Описание *</label>
           <textarea class="form-control" id="description" rows="3"
                     [(ngModel)]="electroItem.description"></textarea>
-          <!--          <input type="text" class="form-control" id="description"-->
-          <!--                 [(ngModel)]="electroItem.description" name="description">-->
           <div id="description_help" class="form-text">
             Описание товара
           </div>
