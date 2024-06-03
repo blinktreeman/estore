@@ -46,7 +46,7 @@
 </div>
 
 <h4 class="p-3">Наличие товара по магазинам</h4>
-<table class="table table-sm table-striped table-bordered">
+<table class="table table-sm table-striped">
   <thead>
   <tr>
     <th>Магазин</th>
@@ -71,6 +71,40 @@
   </tr>
   </tbody>
 </table>
+
+<hr>
+
+<!-- Import from csv -->
+<h5 class="mb-3">Распределить товар по магазинам согласно данным из csv-файла</h5>
+<p>Распределение выполнится для всех товаров списка</p>
+<div class="form-group mb-3">
+  <input class="form-control" type="file" (change)="onFileSelected($event)" #fileUpload id="formFile" accept=".csv">
+</div>
+
+<div *ngIf="importedData" class="mb-3">
+  <h6 class="mb-3">Данные к импорту</h6>
+  <table class="table table-sm table-striped">
+    <thead>
+    <tr>
+      <th>Магазин</th>
+      <th>Адрес</th>
+      <th>Количество</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr *ngFor="let electroShop of importedData">
+      <td> {{ electroShop.electroShopPK?.shop?.name }}</td>
+      <td> {{ electroShop.electroShopPK?.electroItem?.name }}</td>
+      <td> {{ electroShop.count }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-warning" (click)="saveImportedDataToDatabase()">
+    Распределить
+  </button>
+
+</div>
 
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false"

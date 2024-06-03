@@ -2,12 +2,12 @@
 
 <table class="table table-sm table-striped table-bordered">
   <thead>
-  <tr>
+  <tr class="text-md-center">
     <th>id</th>
     <th>Наименование</th>
     <th>Тип</th>
     <th>Цена, руб</th>
-    <th>Количество</th>
+    <th>Кол-во</th>
     <th>В архиве</th>
     <th>Описание</th>
     <th></th>
@@ -15,16 +15,16 @@
   </thead>
   <tbody class="table-group-divider">
   <tr *ngFor="let electroItem of electroItemList">
-    <td> {{ electroItem.id }}</td>
+    <td class="text-md-center"> {{ electroItem.id }}</td>
     <td> {{ electroItem.name }}</td>
-    <td> {{ electroItem.electroType?.name }}</td>
-    <td> {{ electroItem.price }}</td>
-    <td> {{ electroItem.count }}</td>
-    <td>
+    <td class="text-md-center"> {{ electroItem.electroType?.name }}</td>
+    <td class="text-md-center"> {{ electroItem.price }}</td>
+    <td class="text-md-center"> {{ electroItem.count }}</td>
+    <td  class="text-md-center">
       <div class="text-bg-danger" *ngIf="electroItem.archive">*</div>
     </td>
     <td> {{ electroItem.description }}</td>
-    <td>
+    <td class="text-md-center">
       <button (click)="itemDetails(electroItem.id)"
               name="position-type_details"
               class="btn btn-outline-primary btn-sm">
@@ -50,7 +50,7 @@
 
 <div *ngIf="importedData" class="mb-3">
   <h6 class="mb-3">Данные к импорту</h6>
-  <table class="table table-sm table-striped table-bordered">
+  <table class="table table-sm table-striped">
     <thead>
     <tr>
       <th>id</th>

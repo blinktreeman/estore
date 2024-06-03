@@ -37,9 +37,7 @@ public class Purchase extends CommonEntity {
     /**
      * Дата/время совершения покупки – дата/время
      */
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "purchase_date")
-    @org.hibernate.annotations.CreationTimestamp
     private Date purchaseDate;
 
     /**

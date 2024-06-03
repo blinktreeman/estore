@@ -2,7 +2,7 @@
 
 <table class="table table-sm table-striped table-bordered">
   <thead>
-  <tr>
+  <tr class="text-md-center">
     <th>id</th>
     <th>Наименование должности</th>
     <th></th>
@@ -10,9 +10,9 @@
   </thead>
   <tbody class="table-group-divider">
   <tr *ngFor="let positionType of positionTypeList">
-    <td> {{ positionType.id }}</td>
+    <td class="text-md-center"> {{ positionType.id }}</td>
     <td> {{ positionType.name }}</td>
-    <td>
+    <td class="text-md-center">
       <button (click)="positionTypeDetails(positionType.id)"
               name="position-type_details"
               class="btn btn-outline-primary btn-sm">

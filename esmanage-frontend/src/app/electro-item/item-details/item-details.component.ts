@@ -3,10 +3,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ElectroItem} from "../../models/electroItem";
 import {ItemService} from "../item.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {ElectroType} from "../../models/electroType";
 import {ElectroShopDto} from "../../models/electroShopDto";
 import {ElectroShop} from "../../models/electroShop";
+import {NgxCsvParser, NgxCSVParserError} from "ngx-csv-parser";
+import {ElectroShopPK} from "../../models/ElectroShopPK";
 
 @Component({
   selector: 'app-item-details',
@@ -15,7 +17,8 @@ import {ElectroShop} from "../../models/electroShop";
     ReactiveFormsModule,
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    DatePipe
   ],
   templateUrl: './item-details.component.html',
   styleUrl: './item-details.component.css'
@@ -30,7 +33,8 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(private service: ItemService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private ngxCsvParser: NgxCsvParser) {
   }
 
   ngOnInit(): void {
@@ -111,7 +115,71 @@ export class ItemDetailsComponent implements OnInit {
       },
       error: err => console.log(err)
     });
-
   }
 
+  /**
+   * Распределение товара по магазинам в соответствие с данными csv-файла
+   */
+  header: boolean = false;
+  importedData: ElectroShop[] | undefined;
+
+  onFileSelected(event: any): void {
+
+    let file: File = event.target.files[0];
+    if (file && file.size > 0) {
+
+      this.header = (this.header as unknown as string) === 'true' || this.header;
+
+      this.ngxCsvParser.parse(file, {header: this.header, delimiter: ';', encoding: 'windows-1251'})
+        .pipe().subscribe({
+        next: (result) => {
+          if (!(result instanceof NgxCSVParserError)) {
+            this.importedData = result.map(entry => this.mapToElectroShop(entry));
+            this.importedData.shift();
+          }
+        },
+        error: (error: NgxCSVParserError) => {
+          console.log('Error', error);
+        }
+      });
+    }
+  }
+
+  private mapToElectroShop(entry: any) {
+
+    const electroShopPK = {} as ElectroShopPK;
+    const electroShop = { electroShopPK } as ElectroShop;
+
+    let shopId: bigint = entry[0];
+    this.service.getShopById(shopId).subscribe({
+      next: value => electroShopPK.shop = value
+    });
+
+    let electroItemId: bigint = entry[1];
+    this.service.getElectroItemById(electroItemId).subscribe({
+      next: value => {
+        electroShopPK.electroItem = value
+      }
+    });
+
+    electroShop.count = Number(entry[2]);
+
+    return electroShop;
+  }
+
+  saveImportedDataToDatabase() {
+    this.importedData?.forEach(value => {
+      this.service.updateElectroShop(value).subscribe({
+        next: value => {
+          if (value.electroShopPK?.electroItem?.id == this.electroItem.id) {
+            let findName = value.electroShopPK?.shop?.name;
+            let index = this.shopDtoList.findIndex(s => s.name === findName);
+            this.shopDtoList[index].count = value.count;
+          }
+        },
+        error: err => console.log(err)
+      });
+    });
+    this.importedData = [];
+  }
 }
