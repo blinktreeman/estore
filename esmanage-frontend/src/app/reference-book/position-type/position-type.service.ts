@@ -17,6 +17,10 @@ export class PositionTypeService {
     return this.http.post<PositionType>(`${this.BASE_URL}/position-type`, positionType)
   }
 
+  saveAll(entityList: PositionType[] | undefined): Observable<PositionType[]> {
+    return this.http.post<PositionType[]>(`${this.BASE_URL}/position-type/save-all`, entityList);
+  }
+
   getPositionTypeById(id: bigint | undefined): Observable<PositionType> {
     return this.http.get<PositionType>(`${this.BASE_URL}/position-type?id=${id}`)
   }

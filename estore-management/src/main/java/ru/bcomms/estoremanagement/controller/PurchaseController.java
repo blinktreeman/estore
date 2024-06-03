@@ -21,6 +21,11 @@ public class PurchaseController {
         return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/save-all")
+    public ResponseEntity<Iterable<Purchase>> saveAll(@RequestBody Iterable<Purchase> entityList) {
+        return new ResponseEntity<>(service.saveAll(entityList), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<Purchase> findById(@RequestParam(name = "id") Long id) {
         return service

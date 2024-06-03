@@ -24,9 +24,40 @@
 </table>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createElectroType">
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createElectroType">
   Добавить
 </button>
+
+<hr>
+
+<!-- Import from csv -->
+<h5 class="mb-3">Импорт данных из csv-файла</h5>
+<div class="form-group mb-3">
+  <input class="form-control" type="file" (change)="onFileSelected($event)" #fileUpload id="formFile" accept=".csv">
+</div>
+
+<div *ngIf="importedData" class="mb-3">
+  <h6 class="mb-3">Данные к импорту</h6>
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Должность</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr *ngFor="let data of importedData">
+      <td> {{ data.id }}</td>
+      <td> {{ data.name }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-warning" (click)="saveImportedDataToDatabase()">
+    Сохранить
+  </button>
+
+</div>
 
 <!-- Create ElectroType Modal -->
 <div class="modal fade" id="createElectroType" data-bs-backdrop="static" data-bs-keyboard="false"

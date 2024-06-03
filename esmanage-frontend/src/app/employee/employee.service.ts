@@ -19,6 +19,10 @@ export class EmployeeService {
     return this.http.post<Employee>(`${this.BASE_URL}/employee`, employee)
   }
 
+  saveAll(entityList: Employee[] | undefined): Observable<Employee[]> {
+    return this.http.post<Employee[]>(`${this.BASE_URL}/employee/save-all`, entityList);
+  }
+
   getEmployeeById(id: bigint | undefined): Observable<Employee> {
     return this.http.get<Employee>(`${this.BASE_URL}/employee?id=${id}`)
   }

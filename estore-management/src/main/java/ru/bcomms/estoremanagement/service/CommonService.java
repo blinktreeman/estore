@@ -19,6 +19,10 @@ public abstract class CommonService<E extends CommonEntity, R extends CommonRepo
         return repository.save(entity);
     }
 
+    public Iterable<E> saveAll(Iterable<E> entityCollection) {
+        return repository.saveAll(entityCollection);
+    }
+
     public Optional<E> findById(Long id) {
         return repository.findById(id);
     }

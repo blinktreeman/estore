@@ -24,6 +24,10 @@ export class PurchaseService {
     return this.http.post<Purchase>(`${this.BASE_URL}/purchase`, purchase)
   }
 
+  saveAll(entityList: Purchase[] | undefined): Observable<Purchase[]> {
+    return this.http.post<Purchase[]>(`${this.BASE_URL}/purchase/save-all`, entityList);
+  }
+
   getPurchaseById(id: bigint | undefined): Observable<Purchase> {
     return this.http.get<Purchase>(`${this.BASE_URL}/purchase?id=${id}`)
   }
