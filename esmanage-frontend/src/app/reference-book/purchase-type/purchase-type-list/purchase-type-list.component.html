@@ -2,7 +2,7 @@
 
 <table class="table table-sm table-striped table-bordered">
   <thead>
-  <tr>
+  <tr class="text-md-center">
     <th>id</th>
     <th>Наименование типа покупки</th>
     <th></th>
@@ -10,9 +10,9 @@
   </thead>
   <tbody class="table-group-divider">
   <tr *ngFor="let purchaseType of purchaseTypeList">
-    <td> {{ purchaseType.id }}</td>
+    <td class="text-md-center"> {{ purchaseType.id }}</td>
     <td> {{ purchaseType.name }}</td>
-    <td>
+    <td class="text-md-center">
       <button (click)="purchaseTypeDetails(purchaseType.id)"
               name="position-type_details"
               class="btn btn-outline-primary btn-sm">

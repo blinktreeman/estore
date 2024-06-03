@@ -2,7 +2,7 @@
 
 <table class="table table-sm table-striped table-bordered">
   <thead>
-  <tr>
+  <tr class="text-md-center">
     <th>id</th>
     <th>Наименование магазина</th>
     <th>Адрес магазина</th>
@@ -11,10 +11,10 @@
   </thead>
   <tbody class="table-group-divider">
   <tr *ngFor="let shop of shopList">
-    <td> {{ shop.id }}</td>
+    <td class="text-md-center"> {{ shop.id }}</td>
     <td> {{ shop.name }}</td>
     <td> {{ shop.address }}</td>
-    <td>
+    <td class="text-md-center">
       <button (click)="shopDetails(shop.id)"
               name="shop_details"
               class="btn btn-outline-primary btn-sm">

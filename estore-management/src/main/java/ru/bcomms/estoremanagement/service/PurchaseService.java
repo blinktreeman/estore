@@ -1,8 +1,11 @@
 package ru.bcomms.estoremanagement.service;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.bcomms.estoremanagement.entity.Purchase;
 import ru.bcomms.estoremanagement.repository.PurchaseRepository;
+
+import java.util.List;
 
 @Service
 public class PurchaseService extends CommonService<Purchase, PurchaseRepository> {
@@ -19,5 +22,10 @@ public class PurchaseService extends CommonService<Purchase, PurchaseRepository>
                 savedPurchase.getElectroItem().getId());
         repository.updateElectroItemCount(purchase.getElectroItem().getId());
         return savedPurchase;
+    }
+
+    @Override
+    public List<Purchase> findAll() {
+        return repository.findAll(Sort.by("purchaseDate").ascending());
     }
 }

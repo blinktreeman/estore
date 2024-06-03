@@ -24,6 +24,7 @@ import {
 import {ItemDetailsComponent} from "./electro-item/item-details/item-details.component";
 import {EmployeeDetailsComponent} from "./employee/employee-details/employee-details.component";
 import {PurchaseDetailsComponent} from "./purchase/purchase-details/purchase-details.component";
+import {HomeComponent} from "./home/home.component";
 
 export const routes: Routes = [
 
@@ -50,5 +51,8 @@ export const routes: Routes = [
 
   {path: 'shop-list', component: ShopListComponent},
   {path: 'shop-details/:id', component: ShopDetailsComponent},
+
+  {path: 'home', component: HomeComponent},
+  {path: '', redirectTo: 'home', pathMatch: "full"},
 
 ];

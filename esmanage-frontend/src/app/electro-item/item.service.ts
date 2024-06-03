@@ -6,6 +6,7 @@ import {ElectroItem} from "../models/electroItem";
 import {ElectroType} from "../models/electroType";
 import {ElectroShopDto} from "../models/electroShopDto";
 import {ElectroShop} from "../models/electroShop";
+import {Shop} from "../models/shop";
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,6 @@ export class ItemService {
     return this.http.get<ElectroItem>(`${this.BASE_URL}/electro-item?id=${id}`)
   }
 
-  // Получить список магазинов с количеством по заданному материалу
-  getShopListWithElectroItemCount(item_id: bigint | undefined): Observable<ElectroShopDto[]> {
-    return this.http.get<ElectroShopDto[]>(`${this.BASE_URL}/shop/all-with-item-count?item_id=${item_id}`)
-  }
-
   getElectroItemList(): Observable<ElectroItem[]> {
     return this.http.get<ElectroItem[]>(`${this.BASE_URL}/electro-item/all`)
   }
@@ -49,8 +45,21 @@ export class ItemService {
     return this.http.get<ElectroType[]>(`${this.BASE_URL}/electro-type/all`)
   }
 
+  /**
+   * Shop methods
+   */
+
   // Обновление пром. таблицы при изменении количества товара
   updateElectroShop(electroShop: ElectroShop): Observable<ElectroShop> {
     return this.http.put<ElectroShop>(`${this.BASE_URL}/electro-shop`, electroShop);
+  }
+
+  // Получить список магазинов с количеством по заданному материалу
+  getShopListWithElectroItemCount(item_id: bigint | undefined): Observable<ElectroShopDto[]> {
+    return this.http.get<ElectroShopDto[]>(`${this.BASE_URL}/shop/all-with-item-count?item_id=${item_id}`)
+  }
+
+  getShopById(id: bigint | undefined): Observable<Shop> {
+    return this.http.get<Shop>(`${this.BASE_URL}/shop?id=${id}`)
   }
 }

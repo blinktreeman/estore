@@ -9,6 +9,7 @@ import {Employee} from "../../models/employee";
 import {PurchaseService} from "../purchase.service";
 import {Router} from "@angular/router";
 import {PurchaseType} from "../../models/purchaseType";
+import {NgxCsvParser, NgxCSVParserError} from "ngx-csv-parser";
 
 @Component({
   selector: 'app-purchase-list',
@@ -25,7 +26,8 @@ import {PurchaseType} from "../../models/purchaseType";
 export class PurchaseListComponent implements OnInit {
 
   constructor(private service: PurchaseService,
-              private router: Router) {
+              private router: Router,
+              private ngxCsvParser: NgxCsvParser) {
   }
 
   ngOnInit() {
@@ -55,6 +57,7 @@ export class PurchaseListComponent implements OnInit {
   newPurchase: Purchase = new Purchase();
 
   createPurchase() {
+    this.newPurchase.purchaseDate = new Date();
     this.service.createPurchase(this.newPurchase).subscribe({
       next: value => {
         this.purchaseList.push(value);
@@ -134,6 +137,7 @@ export class PurchaseListComponent implements OnInit {
           error: err => {
             this.availableQuantityOfGoods = 0;
             this.invalid = true;
+            console.log(err);
           }
         });
     }
@@ -163,6 +167,7 @@ export class PurchaseListComponent implements OnInit {
           error: err => {
             this.availableQuantityOfGoods = 0;
             this.invalid = true;
+            console.log(err);
           }
         });
     }
@@ -180,4 +185,72 @@ export class PurchaseListComponent implements OnInit {
     this.getShopList();
   }
 
+  /**
+   * Импорт покупок из csv файла
+   */
+  header: boolean = false;
+  importedData: Purchase[] | undefined;
+
+  onFileSelected(event: any): void {
+
+    let file: File = event.target.files[0];
+    if (file && file.size > 0) {
+
+      this.header = (this.header as unknown as string) === 'true' || this.header;
+
+      this.ngxCsvParser.parse(file, {header: this.header, delimiter: ';', encoding: 'windows-1251'})
+        .pipe().subscribe({
+        next: (result) => {
+          if (!(result instanceof NgxCSVParserError)) {
+            this.importedData = result.map(entry => this.mapToPurchase(entry));
+            this.importedData.shift();
+          }
+        },
+        error: (error: NgxCSVParserError) => {
+          console.log('Error', error);
+        }
+      });
+    }
+  }
+
+  private mapToPurchase(entry: any) {
+
+    const purchase = {} as Purchase;
+    purchase.id = entry[0];
+
+    let electroItemId: bigint = entry[1];
+    this.service.getElectroItemById(electroItemId).subscribe({
+      next: value => purchase.electroItem = value
+    });
+
+    let employeeId: bigint = entry[2];
+    this.service.getEmployeeById(employeeId).subscribe({
+      next: value => purchase.employee = value
+    });
+
+    const [day, month, year] = entry[3].split(".");
+    purchase.purchaseDate = new Date(year + "-" + month + "-" + day);
+
+    let purchaseTypeId: bigint = entry[4];
+    this.service.getPurchaseTypeById(purchaseTypeId).subscribe({
+      next: value => purchase.purchaseType = value
+    });
+
+    let importedSopId: bigint = entry[5];
+    this.service.getShopById(importedSopId).subscribe({
+      next: value => purchase.shop = value
+    });
+
+    return purchase;
+  }
+
+  saveImportedDataToDatabase() {
+    this.service.saveAll(this.importedData).subscribe({
+      next: value => {
+        value.forEach(entity => this.purchaseList?.push(entity));
+        this.importedData = [];
+      },
+      error: err => console.log(err)
+    });
+  }
 }

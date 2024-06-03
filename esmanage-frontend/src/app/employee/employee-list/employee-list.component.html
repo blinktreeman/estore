@@ -2,7 +2,7 @@
 
 <table class="table table-sm table-striped table-bordered">
   <thead>
-  <tr>
+  <tr class="text-md-center">
     <th>id</th>
     <th>Фамилия</th>
     <th>Имя</th>
@@ -16,20 +16,20 @@
   </thead>
   <tbody class="table-group-divider">
   <tr *ngFor="let employee of employeeList">
-    <td> {{ employee.id }}</td>
+    <td class="text-md-center"> {{ employee.id }}</td>
     <td> {{ employee.lastName }}</td>
     <td> {{ employee.firstName }}</td>
     <td> {{ employee.patronymic }}</td>
-    <td> {{ employee.birthDate | date }}</td>
-    <td> {{ employee.positionType?.name }}</td>
-    <td> {{ employee.shop?.name }}</td>
-    <td>
+    <td class="text-md-center"> {{ employee.birthDate | date }}</td>
+    <td class="text-md-center"> {{ employee.positionType?.name }}</td>
+    <td class="text-md-center"> {{ employee.shop?.name }}</td>
+    <td class="text-md-center">
       <div *ngIf="employee.gender; else unset">М</div>
       <ng-template #unset>
         <div>Ж</div>
       </ng-template>
     </td>
-    <td>
+    <td class="text-md-center">
       <button (click)="employeeDetails(employee.id)"
               name="employee_details"
               class="btn btn-outline-primary btn-sm">
@@ -57,7 +57,7 @@
   <h6 class="mb-3">Данные к импорту</h6>
   <table class="table table-sm table-striped table-bordered">
     <thead>
-    <tr>
+    <tr class="text-md-center">
       <th>id</th>
       <th>Фамилия</th>
       <th>Имя</th>
@@ -70,14 +70,14 @@
     </thead>
     <tbody class="table-group-divider">
     <tr *ngFor="let employee of importedData">
-      <td> {{ employee.id }}</td>
+      <td class="text-md-center"> {{ employee.id }}</td>
       <td> {{ employee.lastName }}</td>
       <td> {{ employee.firstName }}</td>
       <td> {{ employee.patronymic }}</td>
-      <td> {{ employee.birthDate | date }}</td>
-      <td> {{ employee.positionType?.name }}</td>
-      <td> {{ employee.shop?.name }}</td>
-      <td>
+      <td class="text-md-center"> {{ employee.birthDate | date }}</td>
+      <td class="text-md-center"> {{ employee.positionType?.name }}</td>
+      <td class="text-md-center"> {{ employee.shop?.name }}</td>
+      <td class="text-md-center">
         <div *ngIf="employee.gender; else unset">М</div>
         <ng-template #unset>
           <div>Ж</div>

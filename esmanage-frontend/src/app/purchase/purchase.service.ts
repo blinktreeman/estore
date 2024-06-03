@@ -48,6 +48,10 @@ export class PurchaseService {
     return this.http.get<PurchaseType[]>(`${this.BASE_URL}/purchase-type/all`);
   }
 
+  getPurchaseTypeById(id: bigint | undefined): Observable<PurchaseType> {
+    return this.http.get<PurchaseType>(`${this.BASE_URL}/purchase-type?id=${id}`);
+  }
+
   /**
    * Electro Item methods
    */
@@ -60,6 +64,10 @@ export class PurchaseService {
     return this.http.get<ElectroType[]>(`${this.BASE_URL}/electro-type/all`)
   }
 
+  getElectroItemById(id: bigint | undefined): Observable<ElectroItem> {
+    return this.http.get<ElectroItem>(`${this.BASE_URL}/electro-item?id=${id}`)
+  }
+
   /**
    * Shop methods
    */
@@ -68,12 +76,20 @@ export class PurchaseService {
     return this.http.get<Shop[]>(`${this.BASE_URL}/shop/all`)
   }
 
+  getShopById(id: bigint | undefined): Observable<Shop> {
+    return this.http.get<Shop>(`${this.BASE_URL}/shop?id=${id}`)
+  }
+
   /**
    * Employee methods
    */
 
   getEmployeeListByShopId(id: bigint | undefined): Observable<Employee[]> {
     return this.http.get<Employee[]>(`${this.BASE_URL}/employee/all-by-shop-id?id=${id}`)
+  }
+
+  getEmployeeById(id: bigint | undefined): Observable<Employee> {
+    return this.http.get<Employee>(`${this.BASE_URL}/employee?id=${id}`)
   }
 
   /**
