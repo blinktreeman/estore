@@ -20,6 +20,10 @@ export class ItemService {
     return this.http.post<ElectroItem>(`${this.BASE_URL}/electro-item`, electroItem)
   }
 
+  saveAll(entityList: ElectroItem[] | undefined): Observable<ElectroItem[]> {
+    return this.http.post<ElectroItem[]>(`${this.BASE_URL}/electro-item/save-all`, entityList);
+  }
+
   getElectroItemById(id: bigint | undefined): Observable<ElectroItem> {
     return this.http.get<ElectroItem>(`${this.BASE_URL}/electro-item?id=${id}`)
   }

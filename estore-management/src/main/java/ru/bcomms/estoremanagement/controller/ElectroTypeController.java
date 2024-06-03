@@ -21,6 +21,11 @@ public class ElectroTypeController {
         return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/save-all")
+    public ResponseEntity<Iterable<ElectroType>> saveAll(@RequestBody Iterable<ElectroType> entityList) {
+        return new ResponseEntity<>(service.saveAll(entityList), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<ElectroType> findById(@RequestParam(name = "id") Long id) {
         return service

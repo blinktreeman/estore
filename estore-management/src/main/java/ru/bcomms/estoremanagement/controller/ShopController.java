@@ -24,6 +24,11 @@ public class ShopController {
         return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/save-all")
+    public ResponseEntity<Iterable<Shop>> saveAll(@RequestBody Iterable<Shop> shopList) {
+        return new ResponseEntity<>(service.saveAll(shopList), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<Shop> findById(@RequestParam(name = "id") Long id) {
         return service

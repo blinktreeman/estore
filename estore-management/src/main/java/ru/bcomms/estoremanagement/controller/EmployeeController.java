@@ -21,6 +21,11 @@ public class EmployeeController {
         return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
     }
 
+    @PostMapping(value = "/save-all")
+    public ResponseEntity<Iterable<Employee>> saveAll(@RequestBody Iterable<Employee> entityList) {
+        return new ResponseEntity<>(service.saveAll(entityList), HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<Employee> findById(@RequestParam(name = "id") Long id) {
         return service

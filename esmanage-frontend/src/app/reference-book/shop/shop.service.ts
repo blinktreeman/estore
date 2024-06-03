@@ -17,6 +17,10 @@ export class ShopService {
     return this.http.post<Shop>(`${this.BASE_URL}/shop`, shop)
   }
 
+  saveAll(shopList: Shop[] | undefined): Observable<Shop[]> {
+    return this.http.post<Shop[]>(`${this.BASE_URL}/shop/save-all`, shopList);
+  }
+
   getShopById(id: bigint | undefined): Observable<Shop> {
     return this.http.get<Shop>(`${this.BASE_URL}/shop?id=${id}`)
   }

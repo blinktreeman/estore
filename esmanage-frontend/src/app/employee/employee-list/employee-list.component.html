@@ -41,9 +41,58 @@
 </table>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createEmployee">
+<button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createEmployee">
   Добавить
 </button>
+
+<hr>
+
+<!-- Import from csv -->
+<h5 class="mb-3">Импорт данных из csv-файла</h5>
+<div class="form-group mb-3">
+  <input class="form-control" type="file" (change)="onFileSelected($event)" #fileUpload id="formFile" accept=".csv">
+</div>
+
+<div *ngIf="importedData" class="mb-3">
+  <h6 class="mb-3">Данные к импорту</h6>
+  <table class="table table-sm table-striped table-bordered">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Фамилия</th>
+      <th>Имя</th>
+      <th>Отчество</th>
+      <th>Дата рождения</th>
+      <th>Должность</th>
+      <th>Магазин</th>
+      <th>Пол</th>
+    </tr>
+    </thead>
+    <tbody class="table-group-divider">
+    <tr *ngFor="let employee of importedData">
+      <td> {{ employee.id }}</td>
+      <td> {{ employee.lastName }}</td>
+      <td> {{ employee.firstName }}</td>
+      <td> {{ employee.patronymic }}</td>
+      <td> {{ employee.birthDate | date }}</td>
+      <td> {{ employee.positionType?.name }}</td>
+      <td> {{ employee.shop?.name }}</td>
+      <td>
+        <div *ngIf="employee.gender; else unset">М</div>
+        <ng-template #unset>
+          <div>Ж</div>
+        </ng-template>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button type="button" class="btn btn-warning" (click)="saveImportedDataToDatabase()">
+    Сохранить
+  </button>
+
+</div>
+
 
 <!-- Create Modal -->
 <div class="modal fade" id="createEmployee" data-bs-backdrop="static" data-bs-keyboard="false"

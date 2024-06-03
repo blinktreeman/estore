@@ -17,6 +17,10 @@ export class ElectroTypeService {
     return this.http.post<ElectroType>(`${this.BASE_URL}/electro-type`, electroType)
   }
 
+  saveAll(entityList: ElectroType[] | undefined): Observable<ElectroType[]> {
+    return this.http.post<ElectroType[]>(`${this.BASE_URL}/electro-type/save-all`, entityList);
+  }
+
   getElectroTypeById(id: bigint | undefined): Observable<ElectroType> {
     return this.http.get<ElectroType>(`${this.BASE_URL}/electro-type?id=${id}`)
   }

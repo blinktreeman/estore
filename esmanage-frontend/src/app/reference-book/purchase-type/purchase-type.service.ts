@@ -17,6 +17,10 @@ export class PurchaseTypeService {
     return this.http.post<PurchaseType>(`${this.BASE_URL}/purchase-type`, purchaseType)
   }
 
+  saveAll(entityList: PurchaseType[] | undefined): Observable<PurchaseType[]> {
+    return this.http.post<PurchaseType[]>(`${this.BASE_URL}/purchase-type/save-all`, entityList);
+  }
+
   getPurchaseTypeById(id: bigint | undefined): Observable<PurchaseType> {
     return this.http.get<PurchaseType>(`${this.BASE_URL}/purchase-type?id=${id}`)
   }
