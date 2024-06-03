@@ -10,4 +10,8 @@ public class EmployeeService extends CommonService<Employee, EmployeeRepository>
     public EmployeeService(EmployeeRepository repository) {
         super(repository);
     }
+
+    public Iterable<Employee> findAllByShopId(Long id) {
+        return repository.findAllByShopId(id);
+    }
 }

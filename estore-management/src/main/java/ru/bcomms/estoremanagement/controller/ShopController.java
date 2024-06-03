@@ -3,8 +3,11 @@ package ru.bcomms.estoremanagement.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.bcomms.estoremanagement.dto.ElectroShopDto;
 import ru.bcomms.estoremanagement.entity.Shop;
 import ru.bcomms.estoremanagement.service.ShopService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/shop")
@@ -27,6 +30,13 @@ public class ShopController {
                 .findById(id)
                 .map((value) -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    // Получить список магазинов и количество заданного товара для каждого из них
+    @GetMapping(value = "/all-with-item-count")
+    public ResponseEntity<List<ElectroShopDto>> getAllWithElectroItemCount(
+            @RequestParam(name = "item_id") Long electroItemId) {
+        return new ResponseEntity<>(service.getAllWithElectroItemCount(electroItemId), HttpStatus.OK);
     }
 
     @GetMapping(value = "/all")

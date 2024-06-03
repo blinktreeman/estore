@@ -1,37 +1,46 @@
 import {Component, OnInit} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {EmployeeService} from "../employee.service";
 import {Employee} from "../../models/employee";
 import {PositionType} from "../../models/positionType";
 import {Shop} from "../../models/shop";
-import {EmployeeService} from "../employee.service";
 
 @Component({
-  selector: 'app-employee-list',
+  selector: 'app-employee-details',
   standalone: true,
   imports: [
-    NgForOf,
+    ReactiveFormsModule,
     FormsModule,
     NgIf,
+    NgForOf,
     DatePipe
   ],
-  templateUrl: './employee-list.component.html',
-  styleUrl: './employee-list.component.css'
+  templateUrl: './employee-details.component.html',
+  styleUrl: './employee-details.component.css'
 })
-export class EmployeeListComponent implements OnInit {
+export class EmployeeDetailsComponent implements OnInit {
 
+  id: bigint | undefined;
   employeeList: Employee[] | undefined;
   employee: Employee = new Employee();
   positionTypeList: PositionType[] | undefined;
   shopList: Shop[] | undefined;
 
   constructor(private service: EmployeeService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.getEmployeeList();
+    this.id = this.route.snapshot.params['id'];
+    this.service.getEmployeeById(this.id).subscribe({
+      next: value => {
+        this.employee = value;
+      },
+      error: err => console.log(err)
+    });
     this.getPositionTypeList();
     this.getShopList();
   }
@@ -73,19 +82,19 @@ export class EmployeeListComponent implements OnInit {
     this.employee.shop = shop;
   }
 
-  employeeDetails(id: bigint | undefined) {
-    this.service.getEmployeeById(id).subscribe({
+  updateEmployee() {
+    this.service.updateEmployee(this.employee).subscribe({
       next: value => {
-        this.router.navigate(['/employee-details', id]);
+        this.employee = value;
       },
       error: err => console.log(err)
     });
   }
 
-  createEmployee() {
-    this.service.createEmployee(this.employee).subscribe({
+  deleteEmployee() {
+    this.service.deleteEmployeeById(this.employee.id).subscribe({
       next: value => {
-        this.employeeList?.push(value);
+        this.router.navigate(['/employee-list']);
       },
       error: err => console.log(err)
     });

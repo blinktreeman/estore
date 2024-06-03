@@ -1,1 +1,157 @@
-<p>purchase-list works!</p>
+<h4 class="p-3">Покупки</h4>
+
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>id</th>
+    <th>Товар</th>
+    <th>Сотрудник</th>
+    <th>Дата продажи</th>
+    <th>Тип покупки</th>
+    <th>Магазин</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let purchase of purchaseList">
+    <td> {{ purchase.id }}</td>
+    <td> {{ purchase.electroItem?.name }}</td>
+    <td> {{ purchase.employee?.firstName }} {{ purchase.employee?.lastName }}</td>
+    <td> {{ purchase.purchaseDate | date:'medium' }}</td>
+    <td> {{ purchase.purchaseType?.name }}</td>
+    <td> {{ purchase.shop?.name }}</td>
+    <td>
+      <button (click)="purchaseDetails(purchase.id)"
+              name="employee_details"
+              class="btn btn-outline-primary btn-sm">
+        Просмотреть
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPurchase"
+        (click)="prepareCreating()">
+  Новая покупка
+</button>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createPurchase" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="createPurchaseLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createPurchaseLabel">Новая продажа</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-6">
+
+            <!-- Тип товара -->
+            <div class="form-group mb-3">
+              <label for="electro_type" class="form-label">Тип товара *</label>
+              <select class="form-select" [ngModel]="ElectroType"
+                      (ngModelChange)="onChangeElectroType($event)" name="electro_type">
+                <option *ngFor="let electroType of electroTypeList" [ngValue]="electroType" id="electro_type">
+                  {{ electroType.name }}
+                </option>
+              </select>
+              <div id="electro_type_help" class="form-text">
+                Выберите тип товара
+              </div>
+            </div>
+
+            <!-- Товар -->
+            <div class="form-group mb-3">
+              <label for="electro_item" class="form-label">Товар *</label>
+              <select class="form-select" [ngModel]="ElectroItem"
+                      (ngModelChange)="onChangeElectroItem($event)" name="electro_item">
+                <option *ngFor="let electroItem of electroItemList" [ngValue]="electroItem" id="electro_item">
+                  {{ electroItem.name }}
+                </option>
+              </select>
+              <div id="electro_item_help" class="form-text">
+                Выберите товар
+              </div>
+            </div>
+
+            <!-- Магазин -->
+            <div class="form-group mb-3">
+              <label for="shop" class="form-label">Магазин *</label>
+              <select class="form-select" [ngModel]="Shop"
+                      (ngModelChange)="onChangeShop($event)" name="shop">
+                <option *ngFor="let shop of shopList" [ngValue]="shop" id="shop">
+                  {{ shop.name }}
+                </option>
+              </select>
+              <div id="shop_help" class="form-text">
+                Выберите место продажи
+              </div>
+            </div>
+
+          </div>
+          <div class="col-6">
+
+            <!-- Сотрудник -->
+            <div class="form-group mb-3">
+              <label for="employee" class="form-label">Сотрудник *</label>
+              <select class="form-select" [ngModel]="Employee"
+                      (ngModelChange)="onChangeEmployee($event)" name="employee">
+                <option *ngFor="let employee of employeeList" [ngValue]="employee" id="employee">
+                  {{ employee.lastName }} {{ employee.firstName }}
+                </option>
+              </select>
+            </div>
+
+            <!-- Тип покупки -->
+            <div class="form-group mb-3">
+              <label for="purchase_type" class="form-label">Тип покупки *</label>
+              <select class="form-select" [ngModel]="PurchaseType"
+                      (ngModelChange)="onChangePurchaseType($event)" name="purchase_type">
+                <option *ngFor="let purchaseType of purchaseTypeList" [ngValue]="purchaseType" id="purchase_type">
+                  {{ purchaseType.name }}
+                </option>
+              </select>
+              <div id="purchase_type_help" class="form-text">
+                Выберите тип покупки
+              </div>
+            </div>
+
+
+            <!-- Доступное количество товара в магазине -->
+            <div class="mb-3">
+              <label class="form-label">Наличие товара</label>
+              <p *ngIf="availableQuantityOfGoods > 0; else unset" class="text-success">
+                Количество товара в данном магазине: {{ availableQuantityOfGoods }}
+              </p>
+              <ng-template #unset>
+                <p *ngIf="availableQuantityOfGoods == 0" class="text-danger">
+                  Товар не доступен. Выберите товар и магазин для покупки
+                </p>
+              </ng-template>
+            </div>
+
+          </div>
+        </div>
+
+        <label class="form-label">
+          <mark>Поля, отмеченные "*" обязательны к заполнению</mark>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button  type="button" class="btn btn-success" data-bs-dismiss="modal"
+                 (click)="createPurchase()" [disabled]="invalid">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

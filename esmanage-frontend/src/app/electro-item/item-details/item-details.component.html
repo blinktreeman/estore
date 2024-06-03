@@ -1,0 +1,194 @@
+<div class="row mb-3">
+  <div class="mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-header">
+        <h4>Карточка товара</h4>
+      </div>
+      <div class="card-body">
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <h6>id</h6>
+            <p>{{ electroItem.id }}</p>
+            <h6>Наименование товара</h6>
+            <p>{{ electroItem.name }}</p>
+            <h6>Тип</h6>
+            <p>{{ electroItem.electroType?.name }}</p>
+            <h6>Цена, руб</h6>
+            <p>{{ electroItem.price }}</p>
+          </div>
+          <div class="col-6">
+            <h6>Количество</h6>
+            <p>{{ electroItem.count }}</p>
+            <h6>Доступность товара</h6>
+            <div class="text-danger" *ngIf="electroItem.archive; else unset">в архиве</div>
+            <ng-template #unset>
+              <div class="text-success mb-3">доступен для заказа</div>
+            </ng-template>
+            <h6>Описание</h6>
+            <p>{{ electroItem.description }}</p>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer">
+        <!-- Update button trigger modal -->
+        <button type="button" class="btn btn-warning me-md-2" data-bs-toggle="modal" data-bs-target="#updateModal">
+          Редактировать
+        </button>
+        <!-- Delete button trigger modal -->
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          Удалить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4 class="p-3">Наличие товара по магазинам</h4>
+<table class="table table-sm table-striped table-bordered">
+  <thead>
+  <tr>
+    <th>Магазин</th>
+    <th>Адрес</th>
+    <th>Количество</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody class="table-group-divider">
+  <tr *ngFor="let shopDto of shopDtoList">
+    <td> {{ shopDto.name }}</td>
+    <td> {{ shopDto.address }}</td>
+    <td> {{ shopDto.count }}</td>
+    <td>
+      <!-- Add button trigger modal -->
+      <button type="button" class="btn btn-sm btn-outline-primary me-md-2" data-bs-toggle="modal"
+              data-bs-target="#addModal"
+              (click)="setElectroShop(shopDto, shopDto.count)">
+        Пополнить товар
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Пополнение товара</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="amount" class="form-label">Количество</label>
+          <input type="number" step="1" class="form-control" id="amount"
+                 [(ngModel)]="addedAmount" name="amount">
+          <div id="amount_help" class="form-text">
+            Количество товара, добавляемого в указанный магазин
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="updateElectroShop()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Редактирование товара</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group mb-3">
+          <label for="item_name" class="form-label">Наименование *</label>
+          <input type="text" class="form-control" id="item_name"
+                 [(ngModel)]="electroItem.name" name="item_name">
+          <div id="item_name_help" class="form-text">
+            Наименование товара
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="item_type" class="form-label">Тип товара *</label>
+          <select class="form-select" [ngModel]="ElectroType"
+                  (ngModelChange)="onChangeType($event)" name="type_select">
+            <option *ngFor="let itemType of electroTypeList" [ngValue]="itemType" id="item_type">
+              {{ itemType.name }}
+            </option>
+          </select>
+          <div id="item_type_help" class="form-text">
+            Выберите тип товара
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="item_price" class="form-label">Стоимость, руб *</label>
+          <input type="number" step="1" class="form-control" id="item_price"
+                 [(ngModel)]="electroItem.price" name="item_price">
+          <div id="item_price_help" class="form-text">
+            Стоимость товара
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="description" class="form-label">Описание *</label>
+          <textarea class="form-control" id="description" rows="3"
+                    [(ngModel)]="electroItem.description"></textarea>
+          <div id="description_help" class="form-text">
+            Описание товара
+          </div>
+        </div>
+
+        <label class="form-label">
+          <mark>Поля, отмеченные "*" обязательны к заполнению</mark>
+        </label>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                (click)="updateElectroItem()">
+          Сохранить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header text-bg-danger">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Подтвердите удаление</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Внимание! Данное действие приведет к полному удалению без возможности восстановления
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                (click)="deleteElectroItem()">
+          Подтвердить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

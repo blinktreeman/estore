@@ -1,0 +1,31 @@
+<div class="row mb-3">
+  <div class="mb-3 mb-sm-0">
+    <div class="card">
+      <div class="card-header">
+        <h4>Карточка покупки</h4>
+      </div>
+      <div class="card-body">
+
+        <div class="row mb-3">
+          <div class="col-6">
+            <h6>id</h6>
+            <p>{{ purchase.id }}</p>
+            <h6>Наименование товара</h6>
+            <p>{{ purchase.electroItem?.name }}</p>
+            <h6>Сотрудник</h6>
+            <p>{{ purchase.employee?.lastName }} {{ purchase.employee?.firstName }}</p>
+          </div>
+          <div class="col-6">
+            <h6>Дата покупки</h6>
+            <p>{{ purchase.purchaseDate | date: 'medium' }}</p>
+            <h6>Тип покупки</h6>
+            <p>{{ purchase.purchaseType?.name }}</p>
+            <h6>Магазин</h6>
+            <p>{{ purchase.shop?.name }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

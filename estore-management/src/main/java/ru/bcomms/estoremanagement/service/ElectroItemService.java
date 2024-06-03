@@ -10,4 +10,8 @@ public class ElectroItemService extends CommonService<ElectroItem, ElectroItemRe
     public ElectroItemService(ElectroItemRepository repository) {
         super(repository);
     }
+
+    public Iterable<ElectroItem> findAllByElectroTypeId(Long id) {
+        return repository.findAllByElectroTypeId(id);
+    }
 }

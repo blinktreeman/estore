@@ -34,6 +34,11 @@ public class EmployeeController {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/all-by-shop-id")
+    public ResponseEntity<Iterable<Employee>> findAllByShopId(@RequestParam(name = "id") Long id) {
+        return new ResponseEntity<>(service.findAllByShopId(id), HttpStatus.OK);
+    }
+
     @PutMapping
     public ResponseEntity<Employee> update(@RequestBody Employee entity) {
         return service.update(entity)
