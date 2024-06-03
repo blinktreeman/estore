@@ -23,6 +23,7 @@ import {
 } from "./reference-book/purchase-type/purchase-type-details/purchase-type-details.component";
 import {ItemDetailsComponent} from "./electro-item/item-details/item-details.component";
 import {EmployeeDetailsComponent} from "./employee/employee-details/employee-details.component";
+import {PurchaseDetailsComponent} from "./purchase/purchase-details/purchase-details.component";
 
 export const routes: Routes = [
 
@@ -36,7 +37,7 @@ export const routes: Routes = [
   {path: 'employee-details/:id', component: EmployeeDetailsComponent},
 
   {path: 'purchase-list', component: PurchaseListComponent},
-  {path: 'purchase-details/:id', component: PurchaseTypeDetailsComponent},
+  {path: 'purchase-details/:id', component: PurchaseDetailsComponent},
 
   {path: 'electro-type-list', component: ElectroTypeListComponent},
   {path: 'electro-type-details/:id', component: ElectroTypeDetailsComponent},

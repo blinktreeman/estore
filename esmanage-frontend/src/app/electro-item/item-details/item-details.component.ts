@@ -7,7 +7,6 @@ import {NgForOf, NgIf} from "@angular/common";
 import {ElectroType} from "../../models/electroType";
 import {ElectroShopDto} from "../../models/electroShopDto";
 import {ElectroShop} from "../../models/electroShop";
-import {ElectroShopPK} from "../../models/ElectroShopPK";
 
 @Component({
   selector: 'app-item-details',

@@ -1,6 +1,8 @@
 package ru.bcomms.estoremanagement.repository;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -25,4 +27,12 @@ public interface ElectroShopRepository extends JpaRepository<ElectroShop, Electr
     @Query(value = "SELECT * FROM electro_shop AS es WHERE es.lectro_item_id = :electroItemId",
             nativeQuery = true)
     Iterable<ElectroShop> findAllByElectroItemId(@Param("electroItemId") Long electroItemId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE electro_item ei " +
+            "SET count = (SELECT SUM(e.count) FROM electro_shop e WHERE e.electro_item_id = :id) " +
+            "WHERE ei.id = :id",
+            nativeQuery = true)
+    void updateElectroItemCount(@Param(value = "id") Long id);
 }

@@ -48,7 +48,10 @@ public class ElectroShopService {
     }
 
     public ElectroShop update(ElectroShop entity) {
-        return repository.save(entity);
+        ElectroShop savedElectroShop = repository.save(entity);
+        // Update item count
+        repository.updateElectroItemCount(savedElectroShop.getElectroShopPK().getElectroItem().getId());
+        return savedElectroShop;
     }
 
     public void deleteByPK(ElectroShopPK pk) {

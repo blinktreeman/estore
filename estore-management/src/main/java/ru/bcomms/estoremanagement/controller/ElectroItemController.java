@@ -29,6 +29,11 @@ public class ElectroItemController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping(value = "/all-by-type-id")
+    public ResponseEntity<Iterable<ElectroItem>> findAllByElectroTypeId(@RequestParam(name = "id") Long id) {
+        return new ResponseEntity<>(service.findAllByElectroTypeId(id), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/all")
     public ResponseEntity<Iterable<ElectroItem>> findAll() {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);

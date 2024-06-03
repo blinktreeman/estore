@@ -10,4 +10,14 @@ public class PurchaseService extends CommonService<Purchase, PurchaseRepository>
     public PurchaseService(PurchaseRepository repository) {
         super(repository);
     }
+
+    @Override
+    public Purchase save(Purchase purchase) {
+        Purchase savedPurchase = repository.save(purchase);
+        // Update item count
+        repository.updateElectroShopCount(savedPurchase.getShop().getId(),
+                savedPurchase.getElectroItem().getId());
+        repository.updateElectroItemCount(purchase.getElectroItem().getId());
+        return savedPurchase;
+    }
 }
