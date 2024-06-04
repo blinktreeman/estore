@@ -35,6 +35,8 @@ export class PurchaseComponent implements OnInit {
     });
   }
 
+purchaseSum: number = 0;
+
   getStatistic() {
     console.log(this.electroTypeList);
     let checkedItems: number[] = [];
@@ -45,7 +47,7 @@ export class PurchaseComponent implements OnInit {
     });
     this.service.getPurchaseSum(checkedItems).subscribe({
       next: value => {
-        console.log(value);
+        this.purchaseSum = value;
       },
       error: err => console.log(err)
     });
