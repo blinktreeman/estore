@@ -62,6 +62,22 @@ public class PurchaseController {
                 request.getToDate()), HttpStatus.OK);
     }
 
+    // Получить сумму покупок для выбранных типов товара
+    @PostMapping(value = "/sum-by-types")
+    public ResponseEntity<Integer> getSumOfPurchaseByItemTypes(@RequestBody List<Long> itemTypeList) {
+        return new ResponseEntity<>(service.getSumOfPurchaseByItemTypeList(itemTypeList), HttpStatus.OK);
+    }
+
+    // Получить количество покупок товара заданного типа ниже указанной цены
+    @GetMapping(value = "amount-by-type")
+    public ResponseEntity<Integer> getAmountOfPurchaseByItemTypeAndMaxPrice(
+            @RequestParam(name = "id") Long itemTypeId,
+            @RequestParam(name = "price") Integer maxPrice) {
+        return new ResponseEntity<>(
+                service.getAmountOfPurchaseByItemTypeAndMaxPrice(itemTypeId, maxPrice),
+                HttpStatus.OK);
+    }
+
     @PutMapping
     public ResponseEntity<Purchase> update(@RequestBody Purchase entity) {
         return service.update(entity)

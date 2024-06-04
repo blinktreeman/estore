@@ -47,4 +47,19 @@ public interface PurchaseRepository extends CommonRepository<Purchase> {
             @Param(value = "position_type_id") Long positionTypeId,
             @Param(value = "from_date") Date fromDate,
             @Param(value = "to_date") Date toDate);
+
+    // Получить сумму покупок для выбранных типов товара
+    @Query(value = "SELECT SUM(pe.price) FROM " +
+            "(SELECT p.electro_id, e.etype_id, e.price " +
+            "FROM purchase AS p " +
+            "LEFT OUTER JOIN electro_item AS e ON p.electro_id = e.id) AS pe " +
+            "WHERE etype_id IN :id_list",
+            nativeQuery = true)
+    Integer getSumOfPurchaseByItemTypeList(@Param(value = "id_list") List<Long> itemTypeList);
+
+    // Получить количество покупок товара заданного типа ниже указанной цены
+    @Query(value = "",
+            nativeQuery = true)
+    Integer getAmountOfPurchaseByItemTypeAndMaxPrice(@Param(value = "type_id") Long itemTypeId,
+                                                     @Param(value = "max_price") Integer maxPrice);
 }

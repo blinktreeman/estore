@@ -1,6 +1,8 @@
 package ru.bcomms.estoremanagement.service;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 import ru.bcomms.estoremanagement.dto.EmployeeWithSalesAmountDto;
 import ru.bcomms.estoremanagement.dto.EmployeeWithSalesSumDto;
@@ -46,5 +48,15 @@ public class PurchaseService extends CommonService<Purchase, PurchaseRepository>
             Date fromDate,
             Date toDate) {
         return repository.getEmployeesWithSalesSum_Named(positionTypeId, fromDate, toDate);
+    }
+
+    // Получить сумму покупок для выбранных типов товара
+    public Integer getSumOfPurchaseByItemTypeList(List<Long> itemTypeList) {
+        return repository.getSumOfPurchaseByItemTypeList(itemTypeList);
+    }
+
+    // Получить количество покупок товара заданного типа ниже указанной цены
+    public Integer getAmountOfPurchaseByItemTypeAndMaxPrice(Long itemTypeId, Integer maxPrice) {
+        return repository.getAmountOfPurchaseByItemTypeAndMaxPrice(itemTypeId, maxPrice);
     }
 }
