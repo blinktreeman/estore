@@ -3,8 +3,13 @@ package ru.bcomms.estoremanagement.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.bcomms.estoremanagement.dto.EmployeeWithSalesAmountDto;
+import ru.bcomms.estoremanagement.dto.EmployeeWithSalesSumDto;
+import ru.bcomms.estoremanagement.dto.StatRequest;
 import ru.bcomms.estoremanagement.entity.Purchase;
 import ru.bcomms.estoremanagement.service.PurchaseService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/purchase")
@@ -37,6 +42,24 @@ public class PurchaseController {
     @GetMapping(value = "/all")
     public ResponseEntity<Iterable<Purchase>> findAll() {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/amount-stat")
+    public ResponseEntity<Iterable<EmployeeWithSalesAmountDto>> getAllEmployeesOrderedBySalesAmount(
+            @RequestBody StatRequest request) {
+        return new ResponseEntity<>(service.getAllEmployeesOrderedBySalesAmount(
+                request.getPositionTypeId(),
+                request.getFromDate(),
+                request.getToDate()), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/sum-stat")
+    public ResponseEntity<Iterable<EmployeeWithSalesSumDto>> getAllEmployeesOrderedBySalesSum(
+            @RequestBody StatRequest request) {
+        return new ResponseEntity<>(service.getAllEmployeesOrderedBySalesSum(
+                request.getPositionTypeId(),
+                request.getFromDate(),
+                request.getToDate()), HttpStatus.OK);
     }
 
     @PutMapping

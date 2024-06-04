@@ -1,0 +1,83 @@
+Вывод информации о лучших сотрудниках, в зависимости от занимаемой должности. Критерии – количество проданных товаров, на какую сумму продано товаров за последний год.
+<div class="row mb-3">
+  <div class="col-8">
+    <h4>Лучшие сотрудники "{{selectedPositionType.name}}"</h4>
+
+    <h6 class="mb-3">Лучшие по количеству продаж </h6>
+    <table class="table table-sm table-striped table-bordered">
+      <thead>
+      <tr class="text-md-center">
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Количество продаж, ед</th>
+      </tr>
+      </thead>
+      <tbody class="table-group-divider">
+      <tr *ngFor="let entry of amountStatisticList">
+        <td> {{ entry.lastName }}</td>
+        <td> {{ entry.firstName }}</td>
+        <td> {{ entry.patronymic }}</td>
+        <td class="text-md-center"> {{ entry.count }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h6 class="mb-3">Лучшие по сумме продаж </h6>
+    <table class="table table-sm table-striped table-bordered">
+      <thead>
+      <tr class="text-md-center">
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Сумма продаж, руб</th>
+      </tr>
+      </thead>
+      <tbody class="table-group-divider">
+      <tr *ngFor="let entry of sumStatisticList">
+        <td> {{ entry.lastName }}</td>
+        <td> {{ entry.firstName }}</td>
+        <td> {{ entry.patronymic }}</td>
+        <td class="text-md-center"> {{ entry.sum }}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="col-4">
+    <h4>Фильтр</h4>
+
+    <div class="form-group mb-3">
+      <label for="position_type" class="form-label">Должность</label>
+      <select class="form-select" [ngModel]="PositionType"
+              (ngModelChange)="onChangePositionType($event)" name="position_type">
+        <option *ngFor="let positionType of positionTypeList" [ngValue]="positionType" id="position_type">
+          {{ positionType.name }}
+        </option>
+      </select>
+      <div id="position_type_help" class="form-text">
+        Выберите должность
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="from_date" class="form-label">От даты</label>
+      <input type="date" class="form-control" id="from_date"
+             [(ngModel)]="fromDateFilter" name="from_date">
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="to_date" class="form-label">До даты</label>
+      <input type="date" class="form-control" id="to_date"
+             [(ngModel)]="toDateFilter" name="to_date">
+    </div>
+
+    <div class="mb-3">
+      <button type="button" class="btn btn-primary"
+              (click)="getStatistic()">
+        Показать
+      </button>
+    </div>
+
+  </div>
+</div>
