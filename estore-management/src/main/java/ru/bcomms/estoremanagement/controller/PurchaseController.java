@@ -68,7 +68,7 @@ public class PurchaseController {
         return new ResponseEntity<>(service.getSumOfPurchaseByItemTypeList(itemTypeList), HttpStatus.OK);
     }
 
-    // Получить количество покупок товара заданного типа ниже указанной цены
+    // Получить количество покупок товара заданного типа ниже указанной цены за последний месяц
     @GetMapping(value = "amount-by-type")
     public ResponseEntity<Integer> getAmountOfPurchaseByItemTypeAndMaxPrice(
             @RequestParam(name = "id") Long itemTypeId,

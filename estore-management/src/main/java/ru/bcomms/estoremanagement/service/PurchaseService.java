@@ -55,7 +55,7 @@ public class PurchaseService extends CommonService<Purchase, PurchaseRepository>
         return repository.getSumOfPurchaseByItemTypeList(itemTypeList);
     }
 
-    // Получить количество покупок товара заданного типа ниже указанной цены
+    // Получить количество покупок товара заданного типа ниже указанной цены за последний месяц
     public Integer getAmountOfPurchaseByItemTypeAndMaxPrice(Long itemTypeId, Integer maxPrice) {
         return repository.getAmountOfPurchaseByItemTypeAndMaxPrice(itemTypeId, maxPrice);
     }
